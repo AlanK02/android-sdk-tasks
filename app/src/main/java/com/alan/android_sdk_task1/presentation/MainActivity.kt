@@ -2,35 +2,24 @@ package com.alan.android_sdk_task1.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.Constraints
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.alan.android_sdk_task1.R
-import com.alan.android_sdk_task1.navigation.MainRouter
-import com.alan.android_sdk_task1.navigation.Router
-import com.alan.android_sdk_task1.worker.NotificationWorker
+import com.alan.android_sdk_task1.databinding.ActivityMainBinding
+import com.alan.core.di.CoreComponent
+import com.alan.core.di.CoreComponentProvider
+import com.alan.feature_home.presentation.HomeFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
 
-    private lateinit var router: Router
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val constraints = Constraints.Builder()
-            .setRequiresCharging(true)
-            .build()
 
-        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setConstraints(constraints)
-            .build()
-
-        WorkManager.getInstance(this).enqueue(workRequest)
-        router = MainRouter(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, Fragment1(router))
+                .replace(binding.fragmentContainer.id, HomeFragment())
                 .commit()
         }
     }

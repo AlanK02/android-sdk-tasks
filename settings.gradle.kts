@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "android-sdk-task1"
 include(":app")
- 
+include(":core")
+include(":feature_home")
